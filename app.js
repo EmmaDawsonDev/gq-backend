@@ -1,11 +1,12 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-// import routes here
+
 const userRoutes = require("./routes/userRoutes")
+const questionRoutes = require("./routes/questionRoutes")
 //const errorHandler = require("./middleware/errorHandler");
-const Logger = require("./middleware/logger");
-const PORT = process.env.PORT || 3000;
+const logger = require("./middleware/logger");
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -14,9 +15,9 @@ app.use(express.json());
 
 
 
-app.use(Logger);
+app.use(logger);
 
-app.use("/api/v1", userRoutes ); // add Question routes here
+app.use("/api/v1", userRoutes, questionRoutes ); // add Question routes here
 
 //app.use(errorHandler);
 
