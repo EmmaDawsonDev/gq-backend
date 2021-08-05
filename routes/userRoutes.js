@@ -5,7 +5,7 @@ const authToken = require("../middleware/authToken");
 
 // router.post("/authenticate", userController.authenticate);
 
-// router.post("/users", userController.createUser);
+router.post("/users", userController.createUser);
 
 // router.get("/myProfile", authToken, userController.getUser);
 

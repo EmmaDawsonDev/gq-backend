@@ -24,13 +24,12 @@ app.use(
 
 //app.use(errorHandler);
 
-client.connect((err) => {
-  const usersCollection = client.db("geoQuizzr").collection("Users");
-  const questionsCollection = client.db("geoQuizzr").collection("Questions");
+client.connect(async (err) => {
+  if (err) throw err;
+
   console.log("Successfully connected to db");
-  app.listen(PORT, () => {
+
+  app.listen(PORT, async () => {
     console.log(`Server started on port ${PORT}`);
   });
-  // perform actions on the collection object
-  client.close();
 });
