@@ -2,9 +2,16 @@ const { body, validationResult } = require("express-validator");
 
 //
 
-const userValidationRules = () => {
+const userCreateValidationRules = () => {
   return [
     body("username").isLength({ min: 2 }),
+    body("email").isEmail(),
+    body("password").isLength({ min: 6 }).isAlphanumeric(),
+  ];
+};
+
+const userLoginValidationRules = () => {
+  return [
     body("email").isEmail(),
     body("password").isLength({ min: 6 }).isAlphanumeric(),
   ];
@@ -24,6 +31,7 @@ const validate = (req, res, next) => {
 };
 
 module.exports = {
-  userValidationRules,
+  userCreateValidationRules,
+  userLoginValidationRules,
   validate,
 };

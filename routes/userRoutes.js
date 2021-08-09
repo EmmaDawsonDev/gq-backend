@@ -3,15 +3,21 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const authToken = require("../middleware/authToken");
 const {
-  userValidationRules,
+  userCreateValidationRules,
+  userLoginValidationRules,
   validate,
 } = require("../middleware/validateUserInput");
 
-// router.post("/authenticate", userController.authenticate);
+router.post(
+  "/authenticate",
+  userLoginValidationRules(),
+  validate,
+  userController.authenticate
+);
 
 router.post(
   "/users",
-  userValidationRules(),
+  userCreateValidationRules(),
   validate,
   userController.createUser
 );
