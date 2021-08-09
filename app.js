@@ -6,7 +6,7 @@ const client = require("./database/connection");
 
 const userRoutes = require("./routes/userRoutes");
 //const questionRoutes = require("./routes/questionRoutes");
-//const errorHandler = require("./middleware/errorHandler");
+const errorHandler = require("./middleware/errorHandler");
 const logger = require("./middleware/logger");
 const PORT = process.env.PORT || 5000;
 
@@ -22,7 +22,7 @@ app.use(
   userRoutes //questionRoutes
 ); // add Question routes here
 
-//app.use(errorHandler);
+app.use(errorHandler);
 
 client.connect((err) => {
   if (err) {

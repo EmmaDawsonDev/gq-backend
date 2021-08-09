@@ -80,6 +80,14 @@ class Teapot extends CustomError {
   }
 }
 
+class UnprocessableEntity extends CustomError {
+  constructor() {
+    super();
+    this.errorCode = 422;
+    this.errorMessage = "User already exists";
+  }
+}
+
 module.exports = {
   Teapot,
   CustomError,
@@ -92,4 +100,5 @@ module.exports = {
   UnsupportedFileType,
   TokenExpired,
   MissingCredentials,
+  UnprocessableEntity,
 };
