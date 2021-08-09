@@ -24,12 +24,14 @@ app.use(
 
 //app.use(errorHandler);
 
-client.connect(async (err) => {
-  if (err) throw err;
+client.connect((err) => {
+  if (err) {
+    throw err;
+  } else {
+    console.log("Successfully connected to db");
 
-  console.log("Successfully connected to db");
-
-  app.listen(PORT, async () => {
-    console.log(`Server started on port ${PORT}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
+  }
 });
