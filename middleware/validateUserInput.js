@@ -4,9 +4,8 @@ const { body, validationResult } = require("express-validator");
 
 const userValidationRules = () => {
   return [
-    // email must be an email
+    body("username").isLength({ min: 2 }),
     body("email").isEmail(),
-    // password must be at least 5 chars long
     body("password").isLength({ min: 6 }).isAlphanumeric(),
   ];
 };

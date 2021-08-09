@@ -1,6 +1,5 @@
 const { Users } = require("../database/connection");
 const bcrypt = require("bcryptjs");
-const { MissingCredentials, UnprocessableEntity } = require("../errors/index");
 
 const createUser = async (req, res, next) => {
   try {
@@ -8,9 +7,6 @@ const createUser = async (req, res, next) => {
 
     const hashedPwd = bcrypt.hashSync(password, 12);
 
-    // if (!email || !password || !username) {
-    //   throw new MissingCredentials(["email", "password", "name"]);
-    // }
     const newUser = {
       username,
       email,
@@ -21,14 +17,9 @@ const createUser = async (req, res, next) => {
       ...newUser,
     });
 
-    console.log("success", response);
-    // response from db:
-    // "newUser": {
-    //  "acknowledged": true,
-    //  "insertedId": "610c39246e80e052062a4491"
-    // }
     res.status(201).json({
-      response,
+      success: response.acknowledged,
+      message: `User with id ${response.insertedId} successfully created`,
     });
   } catch (error) {
     next(error);
