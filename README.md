@@ -13,4 +13,4 @@ A REST API by Emma Dawson
 | Endpoint           | Requested information     | Expected Response                                                 |
 | ------------------ | ------------------------- | ----------------------------------------------------------------- |
 | POST /users        | username, email, password | `{success: true, message: "User with id __ successfully created}` |
-| POST /authenticate | email, password           | `{_id, username, email, token}`                                   |
+| POST /authenticate | email, password           | `{_id, username, email, points, token}`                           |

@@ -43,13 +43,14 @@ const authenticate = async (req, res, next) => {
       throw new InvalidCredentials();
     }
 
-    const jwtPayload = { email, _id: user._id };
+    const jwtPayload = { email: user.email, _id: user._id };
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
 
     const userPayload = {
       _id: user._id,
       username: user.username,
       email: user.email,
+      points: user.points,
       token,
     };
 
