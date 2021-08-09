@@ -1,5 +1,7 @@
 const { Users } = require("../database/connection");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { InvalidCredentials, Unauthorized } = require("../errors/index");
 
 const createUser = async (req, res, next) => {
   try {
@@ -26,6 +28,38 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const authenticate = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await Users.findOne({ email: email });
+
+    if (!user) {
+      throw new Unauthorized();
+    }
+
+    const valid = bcrypt.compareSync(password, user.password);
+
+    if (!valid) {
+      throw new InvalidCredentials();
+    }
+
+    const jwtPayload = { email, _id: user._id };
+    const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
+
+    const userPayload = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      token,
+    };
+
+    res.status(200).json(userPayload);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
+  authenticate,
 };
