@@ -2,6 +2,7 @@ const { Users } = require("../database/connection");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { InvalidCredentials, Unauthorized } = require("../errors/index");
+const { ObjectId } = require("mongodb");
 
 const createUser = async (req, res, next) => {
   try {
@@ -60,7 +61,35 @@ const authenticate = async (req, res, next) => {
   }
 };
 
+const updateUser = async (req, res, next) => {
+  try {
+    const { username, email, password } = req.body;
+    const { _id } = req.user;
+    const updateObj = {};
+    if (username) {
+      updateObj.username = username;
+    }
+    if (email) {
+      updateObj.email = email;
+    }
+    if (password) {
+      updateObj.password = bcrypt.hashSync(password, 12);
+    }
+    const response = await Users.updateOne(
+      { _id: ObjectId(_id) },
+      { $set: updateObj }
+    );
+
+    res
+      .status(200)
+      .json({ message: `Updated ${response.modifiedCount} user(s)` });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
   authenticate,
+  updateUser,
 };

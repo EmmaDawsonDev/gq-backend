@@ -6,6 +6,7 @@ const {
   userCreateValidationRules,
   userLoginValidationRules,
   validate,
+  userUpdateValidationRules,
 } = require("../middleware/validateUserInput");
 
 router.post(
@@ -24,7 +25,13 @@ router.post(
 
 // router.get("/myProfile", authToken, userController.getUser);
 
-// router.patch("/myProfile", authToken, userController.updateUser)
+router.patch(
+  "/myProfile",
+  userUpdateValidationRules(),
+  validate,
+  authToken,
+  userController.updateUser
+);
 
 // router.delete("/users/:id", authToken, userController.deleteUser);
 
