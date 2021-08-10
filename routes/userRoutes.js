@@ -33,6 +33,6 @@ router.patch(
   userController.updateUser
 );
 
-// router.delete("/users/:id", authToken, userController.deleteUser);
+router.delete("/myProfile", authToken, userController.deleteUser);
 
 module.exports = router;

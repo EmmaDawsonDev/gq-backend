@@ -88,8 +88,17 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    console.log("In the deleteUser controller"); //Here we need to look at transactions so that all userId refs can be deleted from questions at the same time as the user is deleted.
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
   authenticate,
   updateUser,
+  deleteUser,
 };
