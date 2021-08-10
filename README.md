@@ -10,7 +10,8 @@ A REST API by Emma Dawson
 
 ### User Endpoints
 
-| Endpoint           | Requested information     | Expected Response                                                 |
-| ------------------ | ------------------------- | ----------------------------------------------------------------- |
-| POST /users        | username, email, password | `{success: true, message: "User with id __ successfully created}` |
-| POST /authenticate | email, password           | `{_id, username, email, points, token}`                           |
+| Endpoint           | Requested information               | Expected Response                                                 |
+| ------------------ | ----------------------------------- | ----------------------------------------------------------------- |
+| POST /users        | username, email, password           | `{success: true, message: "User with id __ successfully created}` |
+| POST /authenticate | email, password                     | `{_id, username, email, points, token}`                           |
+| PATCH /myProfile   | optional: username, email, password | `{message: Updated __ user(s)}`                                   |
