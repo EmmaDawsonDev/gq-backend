@@ -5,6 +5,7 @@ const authToken = require("../middleware/authToken");
 const authRoles = require("../middleware/authRole");
 const {
   questionCreateValidationRules,
+  answerValidationRules,
   validate,
 } = require("../middleware/validateUserInput");
 
@@ -17,6 +18,12 @@ router.post(
   questionController.createQuestion
 );
 
-router.patch("/questions/:id", authToken, questionController.checkAnswer);
+router.patch(
+  "/questions/:id",
+  answerValidationRules(),
+  validate,
+  authToken,
+  questionController.checkAnswer
+);
 
 module.exports = router;

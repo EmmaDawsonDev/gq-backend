@@ -38,6 +38,10 @@ const questionCreateValidationRules = () => {
   ];
 };
 
+const answerValidationRules = () => {
+  return [body("answer").not().isEmpty()];
+};
+
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -56,5 +60,6 @@ module.exports = {
   userLoginValidationRules,
   userUpdateValidationRules,
   questionCreateValidationRules,
+  answerValidationRules,
   validate,
 };
