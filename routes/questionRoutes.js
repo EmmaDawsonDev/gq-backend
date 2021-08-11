@@ -17,4 +17,6 @@ router.post(
   questionController.createQuestion
 );
 
+router.patch("/questions/:id", authToken, questionController.checkAnswer);
+
 module.exports = router;

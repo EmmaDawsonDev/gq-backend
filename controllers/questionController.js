@@ -1,4 +1,7 @@
+const { ObjectId } = require("mongodb");
+const client = require("../database/connection");
 const { Users, Questions } = require("../database/connection");
+const { WrongAnswer } = require("../errors/index");
 
 const createQuestion = async (req, res, next) => {
   try {
@@ -29,6 +32,44 @@ const createQuestion = async (req, res, next) => {
   }
 };
 
+const checkAnswer = async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const { answer } = req.body;
+    const question = await Questions.findOne({ _id: ObjectId(_id) });
+
+    if (question.properties.answer.toLowerCase() !== answer.toLowerCase()) {
+      throw new WrongAnswer();
+    } else {
+      const session = client.startSession();
+
+      try {
+        await session.withTransaction(async () => {
+          const userColl = Users;
+          const questionsColl = Questions;
+          const response = await questionsColl.updateOne(
+            { _id: ObjectId(_id) },
+            { $addToSet: { "properties.answeredBy": req.user._id } }
+          );
+          console.log(response);
+          if (response.modifiedCount == 1) {
+            await userColl.updateOne(
+              { _id: ObjectId(req.user._id) },
+              { $inc: { score: 5 } }
+            );
+          }
+        });
+      } finally {
+        await session.endSession();
+        res.status(200).json({ message: "Correct!" });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createQuestion,
+  checkAnswer,
 };
