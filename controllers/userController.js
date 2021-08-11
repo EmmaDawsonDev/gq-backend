@@ -14,6 +14,7 @@ const createUser = async (req, res, next) => {
       username,
       email,
       password: hashedPwd,
+      role: "user",
       score: 0,
     };
     const response = await Users.insertOne({
@@ -44,7 +45,7 @@ const authenticate = async (req, res, next) => {
       throw new InvalidCredentials();
     }
 
-    const jwtPayload = { email: user.email, _id: user._id };
+    const jwtPayload = { email: user.email, _id: user._id, role: user.role };
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
 
     const userPayload = {

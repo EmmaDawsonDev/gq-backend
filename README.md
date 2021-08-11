@@ -21,3 +21,10 @@ A REST API by Emma Dawson
 | Endpoint        | Requested information                       | Expected Response                                                     |
 | --------------- | ------------------------------------------- | --------------------------------------------------------------------- |
 | POST /questions | question, answer, city, latitude, longitude | `{success: true, message: "Question with id __ successfully created}` |
+
+## Environmental Variables
+
+PORT
+DBUSER
+DBPASSWORD
+JWT_SECRET
