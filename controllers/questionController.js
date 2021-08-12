@@ -49,13 +49,15 @@ const checkAnswer = async (req, res, next) => {
           const questionsColl = Questions;
           const response = await questionsColl.updateOne(
             { _id: ObjectId(_id) },
-            { $addToSet: { "properties.answeredBy": req.user._id } }
+            { $addToSet: { "properties.answeredBy": req.user._id } },
+            { session }
           );
-          console.log(response);
+
           if (response.modifiedCount == 1) {
             await userColl.updateOne(
               { _id: ObjectId(req.user._id) },
-              { $inc: { score: 5 } }
+              { $inc: { score: 5 } },
+              { session }
             );
           }
         });

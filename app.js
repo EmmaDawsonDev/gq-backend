@@ -23,6 +23,7 @@ app.use(errorHandler);
 
 client.connect((err) => {
   if (err) {
+    console.log(err);
     throw err;
   } else {
     console.log("Successfully connected to db");
