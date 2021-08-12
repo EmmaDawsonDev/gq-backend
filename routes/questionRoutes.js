@@ -26,6 +26,6 @@ router.patch(
   questionController.checkAnswer
 );
 
-//router.get("/questions", authToken, questionController.getQuestions)
+router.get("/questions", authToken, questionController.getQuestions);
 
 module.exports = router;

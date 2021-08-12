@@ -71,7 +71,17 @@ const checkAnswer = async (req, res, next) => {
   }
 };
 
+const getQuestions = async (req, res, next) => {
+  try {
+    console.log("In get questions.");
+    res.status(200).json({ message: "all questions" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createQuestion,
   checkAnswer,
+  getQuestions,
 };
