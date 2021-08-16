@@ -6,13 +6,15 @@ const { WrongAnswer } = require("../errors/index");
 const createQuestion = async (req, res, next) => {
   try {
     const { question, answer, longitude, latitude, city } = req.body;
-
+    console.log(question, answer);
+    const answersLowerCase = answer.map((el) => el.toLowerCase());
+    console.log(answersLowerCase);
     const questionObj = {
       type: "Feature",
       properties: {
         city: city,
         question: question,
-        answer: answer.toLowerCase(),
+        answer: answersLowerCase,
         answeredBy: [],
       },
       geometry: {
@@ -38,7 +40,7 @@ const checkAnswer = async (req, res, next) => {
     const { answer } = req.body;
     const question = await Questions.findOne({ _id: ObjectId(_id) });
 
-    if (question.properties.answer.toLowerCase() !== answer.toLowerCase()) {
+    if (!question.properties.answer.includes(answer.toLowerCase())) {
       throw new WrongAnswer();
     } else {
       const session = client.startSession();
@@ -73,6 +75,10 @@ const checkAnswer = async (req, res, next) => {
 
 const getQuestions = async (req, res, next) => {
   try {
+    //accept longitute and latitude from req.params
+    //Questions.aggregate([$geonear...])
+    //project answeredBy array to answered: true/false
+    // add a limit
     console.log("In get questions.");
     res.status(200).json({ message: "all questions" });
   } catch (error) {

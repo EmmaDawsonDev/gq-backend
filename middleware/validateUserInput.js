@@ -31,7 +31,6 @@ const userUpdateValidationRules = (req) => {
 const questionCreateValidationRules = () => {
   return [
     body("question").not().isEmpty(),
-    body("answer").not().isEmpty(),
     body("city").not().isEmpty(),
     body("longitude").not().isEmpty(),
     body("latitude").not().isEmpty(),
