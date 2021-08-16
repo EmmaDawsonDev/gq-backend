@@ -23,23 +23,9 @@ A REST API by Emma Dawson
 | ------ | -------------- | ------------------------------------------- | --------------------------------------------------------------------- |
 | POST   | /questions     | question, answer, city, latitude, longitude | `{success: true, message: "Question with id __ successfully created}` |
 | PATCH  | /questions/:id | answer                                      | `{ message: "Correct!" } `                                            |
-| GET    | /questions     | query params lat lon                        | `{"responseArray": [{                                                 |
+| GET    | /questions     | query params lat lon                        | See responseArray below                                               |
 
-            "_id": "6113de66964540cf1ee3d0c0",
-            "type": "Feature",
-            "properties": {
-                "city": "Vagnhärad",
-                "question": "What is the name of the shop?",
-                "answered": true
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    17.489693,
-                    58.945961
-                ]
-            }
-        }]` |
+`{"responseArray": [ { "_id": "6113de66964540cf1ee3d0c0", "type": "Feature", "properties": { "city": "Vagnhärad", "question": "What is the name of the shop?", "answered": true }, "geometry": { "type": "Point", "coordinates": [ 17.489693, 58.945961 ] } }]` |
 
 ## Environmental Variables
 
