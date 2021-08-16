@@ -6,9 +6,9 @@ const { WrongAnswer } = require("../errors/index");
 const createQuestion = async (req, res, next) => {
   try {
     const { question, answer, longitude, latitude, city } = req.body;
-    console.log(question, answer);
+
     const answersLowerCase = answer.map((el) => el.toLowerCase());
-    console.log(answersLowerCase);
+
     const questionObj = {
       type: "Feature",
       properties: {
@@ -75,12 +75,51 @@ const checkAnswer = async (req, res, next) => {
 
 const getQuestions = async (req, res, next) => {
   try {
-    //accept longitute and latitude from req.params
-    //Questions.aggregate([$geonear...])
-    //project answeredBy array to answered: true/false
-    // add a limit
-    console.log("In get questions.");
-    res.status(200).json({ message: "all questions" });
+    const { _id } = req.user;
+
+    let lon;
+    let lat;
+    if (req.query.search) {
+      console.log("I'm in the search");
+      //Add to this later when you know how to geocode search inputs.
+    } else {
+      lon = +req.query.lon;
+      lat = +req.query.lat;
+    }
+    if (!lon || !lat) {
+      // if something is missing, default to central Stockholm
+      lon = 18.0651611;
+      lat = 59.3286073;
+    }
+    console.log(lon, lat);
+    const responseCursor = Questions.aggregate([
+      {
+        $geoNear: {
+          near: { type: "Point", coordinates: [lon, lat] },
+          distanceField: "dist.calculated",
+          maxDistance: 1000, // Maybe make this dynamic later on depending on zoom
+        },
+      },
+      {
+        $project: {
+          type: 1,
+          "properties.city": 1,
+          "properties.question": 1,
+          "properties.answered": {
+            $in: [_id, "$properties.answeredBy"],
+          },
+          geometry: 1,
+        },
+      },
+    ]);
+
+    const responseArray = [];
+
+    for await (const doc of responseCursor) {
+      responseArray.push(doc);
+    }
+
+    res.status(200).json({ responseArray });
   } catch (error) {
     next(error);
   }
