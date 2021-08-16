@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 
 const userCreateValidationRules = () => {
   return [
-    body("username").isLength({ min: 2 }).isAscii(),
+    body("username").isLength({ min: 2 }),
     body("email").isEmail(),
     body("password").isLength({ min: 6 }).isAlphanumeric(),
   ];
@@ -19,16 +19,26 @@ const userLoginValidationRules = () => {
 
 const userUpdateValidationRules = (req) => {
   return [
-    body("username")
-      .optional({ checkFalsy: true })
-      .isLength({ min: 2 })
-      .isAscii(),
+    body("username").optional({ checkFalsy: true }).isLength({ min: 2 }),
     body("email").optional({ checkFalsy: true }).isEmail(),
     body("password")
       .optional({ checkFalsy: true })
       .isLength({ min: 6 })
       .isAlphanumeric(),
   ];
+};
+
+const questionCreateValidationRules = () => {
+  return [
+    body("question").not().isEmpty(),
+    body("city").not().isEmpty(),
+    body("longitude").not().isEmpty(),
+    body("latitude").not().isEmpty(),
+  ];
+};
+
+const answerValidationRules = () => {
+  return [body("answer").not().isEmpty()];
 };
 
 const validate = (req, res, next) => {
@@ -48,5 +58,7 @@ module.exports = {
   userCreateValidationRules,
   userLoginValidationRules,
   userUpdateValidationRules,
+  questionCreateValidationRules,
+  answerValidationRules,
   validate,
 };

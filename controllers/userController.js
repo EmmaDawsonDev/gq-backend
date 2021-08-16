@@ -1,4 +1,5 @@
-const { Users } = require("../database/connection");
+const { Users, Questions } = require("../database/connection");
+const client = require("../database/connection");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { InvalidCredentials, Unauthorized } = require("../errors/index");
@@ -14,6 +15,7 @@ const createUser = async (req, res, next) => {
       username,
       email,
       password: hashedPwd,
+      role: "user",
       score: 0,
     };
     const response = await Users.insertOne({
@@ -44,7 +46,7 @@ const authenticate = async (req, res, next) => {
       throw new InvalidCredentials();
     }
 
-    const jwtPayload = { email: user.email, _id: user._id };
+    const jwtPayload = { email: user.email, _id: user._id, role: user.role };
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET);
 
     const userPayload = {
@@ -90,7 +92,26 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    console.log("In the deleteUser controller"); //Here we need to look at transactions so that all userId refs can be deleted from questions at the same time as the user is deleted.
+    const _id = req.user._id;
+    const session = client.startSession();
+
+    try {
+      await session.withTransaction(async () => {
+        const userColl = Users;
+        const questionsColl = Questions;
+        await userColl.deleteOne({ _id: ObjectId(_id) }, { session });
+
+        await questionsColl.updateMany(
+          {},
+          { $pull: { "properties.answeredBy": _id } },
+          { session }
+        );
+      });
+    } finally {
+      await session.endSession();
+      res.status(200).json({ message: `User with id ${_id} deleted` });
+    }
+    //Here we need to look at transactions so that all userId refs can be deleted from questions at the same time as the user is deleted.
   } catch (error) {
     next(error);
   }

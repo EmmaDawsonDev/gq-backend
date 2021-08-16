@@ -88,6 +88,14 @@ class UnprocessableEntity extends CustomError {
   }
 }
 
+class WrongAnswer extends CustomError {
+  constructor() {
+    super();
+    this.errorCode = 422;
+    this.errorMessage = "Wrong answer";
+  }
+}
+
 module.exports = {
   Teapot,
   CustomError,
@@ -101,4 +109,5 @@ module.exports = {
   TokenExpired,
   MissingCredentials,
   UnprocessableEntity,
+  WrongAnswer,
 };
