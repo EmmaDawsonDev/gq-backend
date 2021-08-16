@@ -1,9 +1,15 @@
 A REST API by Emma Dawson
 
+This backend API is for a map-based quiz called geoQuizzr and is built with Node.js and a mongoDB database. The database has two collections: Users and Questions. 
+
+### Base URL 
+
+/api/v1/endpoint
+
 ### User model
 
     const user = {   
-      _id: "",  
+       _id: "",  
        username: "Emma",   
        email: "emma@test.com",  
        password: "hashedPassword",  
@@ -18,7 +24,7 @@ A REST API by Emma Dawson
          question: "What is the question?",   
          answer: ["answer", "anser", "svar" "svaret"],   
          answeredBy: ["user1_id", "user3_id", "user31_id"], },   
-      geometry: {   
+       geometry: {   
          type: "Point",   
          coordinates: [longitude, latitude],   
          },   
@@ -39,10 +45,10 @@ A REST API by Emma Dawson
 | ------ | -------------- | ------------------------------------------- | --------------------------------------------------------------------- |
 | POST   | /questions     | question, answer, city, latitude, longitude | `{success: true, message: "Question with id __ successfully created}` |
 | PATCH  | /questions/:id | answer                                      | `{ message: "Correct!" } `                                            |
-| GET    | /questions     | query params lat lon                        | See responseArray below                                               |
+| GET    | /questions     | query params lat lon                        | See response below                                               |
 
 
-
+### Response for GET /questions - limited to a radius of 1km and 100 documents
       {"responseArray": [ {   
         "_id": "6113de66964540cf1ee3d0c0", 
         "type": "Feature",   
@@ -56,7 +62,7 @@ A REST API by Emma Dawson
             } 
          }]
 
-## Environmental Variables
+### Environmental Variables 
 
 PORT    
 DBUSER    
