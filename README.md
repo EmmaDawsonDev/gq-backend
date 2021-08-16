@@ -2,16 +2,16 @@ A REST API by Emma Dawson
 
 ### User model
 
-`const user = {   
+```const user = {   
 _id: "",  
 username: "Emma",   
 email: "emma@test.com",  
 password: "hashedPassword",  
-points: 0 }`
+points: 0 }```
 
 ### Questions model
 
-`const questionObj = {   
+```const questionObj = {   
   type: "Feature",   
   properties: {   
     city: "Stockholm",   
@@ -22,7 +22,7 @@ points: 0 }`
     type: "Point",   
     coordinates: [longitude, latitude],   
     },   
-  };`
+  };```
 
 ### User Endpoints
 
@@ -43,7 +43,7 @@ points: 0 }`
 
 
 
-`{"responseArray": [ {   
+```{"responseArray": [ {   
     "_id": "6113de66964540cf1ee3d0c0", 
     "type": "Feature",   
     "properties": {   
@@ -54,7 +54,7 @@ points: 0 }`
       "type": "Point", 
        "coordinates": [ 17.489693, 58.945961 ]  
        } 
-      }]` 
+      }]``` 
 
 ## Environmental Variables
 
