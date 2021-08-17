@@ -8,7 +8,7 @@ This backend REST API is for a map-based quiz called geoQuizzr and is built with
 
 ### Headers
 
-Authorization - Bearer token required for several routes
+Authorization - Bearer token required for several routes    
 Content-Type - application/json
 
 ### User model
@@ -99,7 +99,7 @@ Start the server
 
 Add a .env file with the following variables to run this project:
 
-PORT - Default port 5000
-DBUSER - From mongoDB  
-DBPASSWORD - From mongoDB
-JWT_SECRET - choose a word or phrase of your choice
+PORT - Default port 5000   
+DBUSER - From mongoDB     
+DBPASSWORD - From mongoDB   
+JWT_SECRET - choose a word or phrase of your choice   
