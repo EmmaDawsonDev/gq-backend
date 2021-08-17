@@ -1,6 +1,7 @@
-A REST API by Emma Dawson
+# geoQuizzr 
+## A REST API by Emma Dawson
 
-This backend API is for a map-based quiz called geoQuizzr and is built with Node.js and a mongoDB database. The database has two collections: Users and Questions. 
+This backend API is for a map-based quiz called geoQuizzr and is built with Node.js, Express and a mongoDB database. The database has two collections: Users and Questions. 
 
 ### Base URL 
 
