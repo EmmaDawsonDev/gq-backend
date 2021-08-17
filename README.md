@@ -27,7 +27,7 @@ Content-Type - application/json
        properties: {
          city: "Stockholm",
          question: "What is the question?",
-         answer: ["answer", "anser", "svar" "svaret"],
+         answer: ["answer", "anser", "svar" "svaret"], // can take several variations to account for common spelling errors/different languages
          answeredBy: ["user1_id", "user3_id", "user31_id"], },
        geometry: {
          type: "Point",
