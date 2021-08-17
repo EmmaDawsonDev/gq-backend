@@ -91,7 +91,7 @@ const getQuestions = async (req, res, next) => {
       lon = 18.0651611;
       lat = 59.3286073;
     }
-    console.log(lon, lat);
+
     const responseCursor = Questions.aggregate([
       {
         $geoNear: {
