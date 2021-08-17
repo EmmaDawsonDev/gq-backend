@@ -1,5 +1,5 @@
 const { Unauthorized, TokenExpired } = require("../errors/index");
-const User = require("../models/userModel");
+
 const jwt = require("jsonwebtoken");
 
 const authToken = (req, res, next) => {
