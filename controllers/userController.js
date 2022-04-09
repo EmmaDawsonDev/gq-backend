@@ -53,9 +53,10 @@ const authenticate = async (req, res, next) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      points: user.points,
+      score: user.score,
+      role: user.role,
       token,
-    };
+    }
 
     res.status(200).json(userPayload);
   } catch (error) {
