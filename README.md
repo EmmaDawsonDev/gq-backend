@@ -18,7 +18,8 @@ Content-Type - application/json
        username: "Emma",
        email: "emma@test.com",
        password: "hashedPassword",
-       points: 0 }
+       score: 0,
+       role: "user" }
 
 ### Questions model
 
@@ -40,7 +41,7 @@ Content-Type - application/json
 | Method | Endpoint      | Requested information               | Auth  | Expected Response                                                 |
 | ------ | ------------- | ----------------------------------- | ----- | ----------------------------------------------------------------- |
 | POST   | /users        | username, email, password           |       | `{success: true, message: "User with id __ successfully created}` |
-| POST   | /authenticate | email, password                     |       | `{_id, username, email, points, token}`                           |
+| POST   | /authenticate | email, password                     |       | `{_id, username, email, score, role, token}`                           |
 | PATCH  | /myProfile    | optional: username, email, password | token | `{message: Updated __ user(s)}`                                   |
 | DELETE | /myProfile    | --                                  | token | `{message: User with id __ deleted}`                              |
 
